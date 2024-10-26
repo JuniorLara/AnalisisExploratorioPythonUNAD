@@ -12,24 +12,28 @@ import matplotlib.ticker as ticker
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.metrics import classification_report, confusion_matrix, precision_recall_curve, average_precision_score, RocCurveDisplay
+from sklearn.metrics import classification_report, confusion_matrix, precision_recall_curve, RocCurveDisplay
+from sklearn.preprocessing import label_binarize
 
 class General:
 
     def leer_datos_csv(ruta : str):
         pd.set_option(MagicString.CONFIGURACION_GENERAL_OPCION_FORMATO, '{:.0f}'.format)
-        Datos = pd.read_csv(MagicString.VEHICULOS_RUTA)
+        Datos = pd.read_csv(ruta)
 
         # Remuevo registros que puedan estar duplicados
         Datos.drop_duplicates(inplace=True)
 
         return Datos
     
+
     def realizar_lectura_datos_analisis(datos : pd.DataFrame, cantidad_registros : int):
         return datos.head(cantidad_registros)
 
+
     def describir_datos_csv(datos: pd.DataFrame):
         return datos.describe()
+
 
     def generar_grafica_datos_obtenidos(datos: pd.DataFrame, header: str, mensaje: str):
         plt.figure(figsize=(6,9))
@@ -42,6 +46,14 @@ class General:
         #Muestro el resultado de nuestra grafica.
         plt.title(mensaje, fontsize=MagicString.CONFIGURACION_GENERAL_TAMAÑO_FUENTE)
     
+
+    def genera_grafica_de_correlacion(datos : pd.DataFrame):
+        plt.figure(figsize=(10,10))
+        sns.heatmap(datos.corr(), annot=True, cmap='coolwarm')
+        plt.title('Matriz de Correlación')
+        plt.show()
+
+
     def dividir_registros_train_y_test(datos : pd.DataFrame, header : str, state):
         X = datos.drop(header, axis=1)
         Y = datos[header]
@@ -50,8 +62,10 @@ class General:
 
         return x_train, x_test, y_train, y_test
 
+
     def evaluar_desempeño_modelo_presicion(modelo, y_test):
         print(classification_report(y_test, modelo,zero_division=0))
+
 
     def entrenar_modelo_regresion_logistica(x_train, y_train, x_test):
         regresion_logistica_modelo = LogisticRegression(solver='liblinear')
@@ -59,6 +73,7 @@ class General:
 
         return regresion_logistica_modelo.predict(x_test)
     
+
     def matriz_de_confusion(y_test, prediccion):
         # Generar grafica matriz de confusion
         matriz_confusion = confusion_matrix(y_test, prediccion)
@@ -66,10 +81,42 @@ class General:
 
         return disp.plot()
 
+
     def curva_de_precision_modelo(y_test, prediccion, title):
         RocCurveDisplay.from_predictions(y_test, prediccion)
         plt.title(title, fontsize=MagicString.CONFIGURACION_GENERAL_TAMAÑO_FUENTE)
         plt.show()
+    
+    
+    def graficar_curva_precision_recall(train_x, train_y, test_x, test_y):
+        # Entrenar el modelo
+        modelo = LogisticRegression(multi_class='ovr', max_iter=5000)
+        modelo.fit(train_x, train_y)
+
+        # Predecir las probabilidades para el conjunto de prueba
+        y_scores = modelo.predict_proba(test_x)
+
+        # Binarizar las clases (si son múltiples clases)
+        y_test_binarized = label_binarize(test_y, classes=np.unique(train_y))
+
+        # Calcular precisión y recall para cada clase
+        precision = {}
+        recall = {}
+        for i in range(y_scores.shape[1]):
+            precision[i], recall[i], _ = precision_recall_curve(y_test_binarized[:, i], y_scores[:, i])
+
+        # Graficar
+        plt.figure(figsize=(10, 6))
+        for i in range(y_scores.shape[1]):
+            plt.plot(recall[i], precision[i], label=f'Clase {i}')
+
+        plt.xlabel(MagicString.CONFIGURACION_GENERAL_X_RECALL)
+        plt.ylabel(MagicString.CONFIGURACION_GENERAL_Y_RECALL)
+        plt.title(MagicString.CONFIGURACION_GENERAL_TITLE_RECALL)
+        plt.legend()
+        plt.grid()
+        plt.show()
+
 
     def realizar_imputacion_de_datos_para_datos_atipicos(datos : pd.DataFrame, nombre_columna: str) -> pd.DataFrame:
         # Calculo el Quartile 1 y Quartile 3
@@ -86,6 +133,7 @@ class General:
 
         # Imputar outliers con la mediana
         return  datos[nombre_columna].mask((datos[nombre_columna] < limite_inferior) | (datos[nombre_columna] > limite_superior), mediana)
+
 
     def regresion_lineal_obtener_intercepto_coeficiente(datos : pd.DataFrame, columna_x, columna_y):
         X = datos[[columna_x]]
@@ -115,7 +163,8 @@ class General:
         precio_prediccion = regresion_lineal_modelo.predict(km)
 
         for i, item in enumerate(km):
-            print(f'Kilometraje predicho para un carro con kilometraje {item[0]} = {precio_prediccion[i]}')
+            print(f'Precio predicho para un carro con kilometraje {item[0]} = $ {precio_prediccion[i]}')
+
 
     def arbol_de_decision(predictor : pd.DataFrame, target : pd.DataFrame):
         print('hola')

@@ -28,6 +28,7 @@ class Vehicles:
         print(MagicString.CONFIGURACION_GENERAL_SEPARADOR_TEXTO)
         print(datos[MagicString.VEHICULOS_HEADER_SELLER_TYPE].unique())
     
+    
     def realizar_ajustes_en_datos(datos : pd.DataFrame):
         datos[MagicString.VEHICULOS_HEADER_NAME] = datos[MagicString.VEHICULOS_HEADER_NAME].str.split().str[MagicString.VALOR_CERO]
 

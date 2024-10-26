@@ -7,7 +7,13 @@ class MagicString:
     CONFIGURACION_GENERAL_PANDA_WARGING = 'future.no_silent_downcasting'
     CONFIGURACION_GENERAL_REGULAR_EXPRESION_DIGITOS = '(\d+\.?\d*)'
     CONFIGURACION_GENERAL_SEPARADOR_TEXTO = '======================'
+    CONFIGURACION_GENERAL_X_RECALL = 'Recall'
+    CONFIGURACION_GENERAL_Y_RECALL = 'Precision'
+    CONFIGURACION_GENERAL_TITLE_RECALL = 'Curva de Precisión-Recall'
 
+    MENSAJE_VALORES_ATIPICOS = 'Identificación de datos faltantes y atípicos( {} )'
+    VALORES_ENCONTRADOS = 'RESUMEN DE LA INFORMACION ENCONTRADA'
+    
     #Constantes con los MagicString utilizados en el analisis exploratorio del csv de Vehiculos
     VEHICULOS_RUTA = './Datasets/car_details_v3.csv'
     VEHICULOS_HEADER_NAME = 'name'
@@ -23,10 +29,7 @@ class MagicString:
     VEHICULOS_HEADER_MAX_POWER = 'max_power'
     VEHICULOS_HEADER_TORQUE = 'torque'
     VEHICULOS_HEADER_SEATS = 'seats'
-
-    VEHICULOS_VALORES_ENCONTRADOS = 'RESUMEN DE LA INFORMACION ENCONTRADA'
-    VEHICULOS_MENSAJE_VALORES_ATIPICOS = 'Identificación de datos faltantes y atípicos( {} )'
-
+    
     VEHICULOS_VALORES_REMPLAZO_FUEL = {
         'Diesel' : 1,
         'Petrol' : 2,
@@ -56,3 +59,18 @@ class MagicString:
 
     #Constantes con los MagicString utilizados en el analisis exploratorio del csv de HEART DISEASE
     HEART_RUTA = './Datasets/heart_cleveland_upload.csv'
+
+    HEART_AGE = 'age'
+    HEART_SEX = 'sex'
+    HEART_CP = 'cp'
+    HEART_TRESTBPS = 'trestbps'
+    HEART_CHOL = 'chol'
+    HEART_FBS = 'fbs'
+    HEART_RESTECG = 'restecg'
+    HEART_THALACH = 'thalach'
+    HEART_EXANG = 'exang'
+    HEART_OLDPEAK = 'oldpeak'
+    HEART_SLOPE = 'slope'
+    HEART_CA = 'ca'
+    HEART_THAL = 'thal'
+    HEART_CONDITION = 'condition'
