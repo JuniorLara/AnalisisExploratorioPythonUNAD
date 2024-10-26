@@ -13,6 +13,7 @@ class MagicString:
 
     MENSAJE_VALORES_ATIPICOS = 'Identificación de datos faltantes y atípicos( {} )'
     VALORES_ENCONTRADOS = 'RESUMEN DE LA INFORMACION ENCONTRADA'
+    MATRIZ_CORRELACION_TITLE = 'Matriz de Correlación'
     
     #Constantes con los MagicString utilizados en el analisis exploratorio del csv de Vehiculos
     VEHICULOS_RUTA = './Datasets/car_details_v3.csv'
@@ -57,7 +58,7 @@ class MagicString:
     VEHICULOS_REGRESION_LINEAL_INTERCEPTO = 'Intercepto BETA 0: {}'
     VEHICULOS_REGRESION_LINEAL_COEFICIENTE = 'Coeficiente BETA 1: {}'
 
-    #Constantes con los MagicString utilizados en el analisis exploratorio del csv de HEART DISEASE
+    # Constantes con los MagicString utilizados en el analisis exploratorio del csv de HEART DISEASE
     HEART_RUTA = './Datasets/heart_cleveland_upload.csv'
 
     HEART_AGE = 'age'
@@ -74,3 +75,20 @@ class MagicString:
     HEART_CA = 'ca'
     HEART_THAL = 'thal'
     HEART_CONDITION = 'condition'
+
+
+    # Constantes con los MagicString utilizados para el analisis exploratorio del csv de WINE QUALITY
+    WINE_RUTA = './Datasets/winequality-red.csv'
+
+    WINE_FIXED_ACIDITY = 'fixed acidity'
+    WINE_VOLATILE_ACIDITY = 'volatile acidity'
+    WINE_CITRIC_ACID = 'citric acid'
+    WINE_RESIDUAL_SUGAR = 'residual sugar'
+    WINE_CHLORIDES = 'chlorides'
+    WINE_FREE_SULFUR_DIOXIDE = 'free sulfur dioxide'
+    WINE_TOTAL_SULFUR_DIOXIDE = 'total sulfur dioxide'
+    WINE_DENSITY = 'density'
+    WINE_PH = 'pH'
+    WINE_SULPHATES = 'sulphates'
+    WINE_ALCOHOL = 'alcohol'
+    WINE_QUALITY = 'quality'

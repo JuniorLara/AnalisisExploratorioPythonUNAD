@@ -1,4 +1,5 @@
-# Algoritmos de Aprendizaje Supervisado
+# Algoritmos de Aprendizaje Supervisado - Actividad 3
+![Logo UNAD](https://datateca.unad.edu.co/contenidos/publicaciones/Comunicaciones_VIMEP/course-images/GENERAL/es/logoUNAD-HD.webp)
 
 ## Descripción
 Este proyecto tiene como objetivo implementar algoritmos de **Machine Learning** supervisado mediante el uso de 3 conjuntos de datos: **Car Details**, **Heart Disease Cleveland UCI** y **Wine Quality**. Se aplican métodos de modelado predictivo, incluyendo técnicas de regresión y clasificación, para llevar a cabo un análisis exhaustivo y realizar predicciones precisas sobre los resultados.

@@ -14,6 +14,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression, LinearRegression
 from sklearn.metrics import classification_report, confusion_matrix, precision_recall_curve, RocCurveDisplay
 from sklearn.preprocessing import label_binarize
+from sklearn.tree import DecisionTreeClassifier, plot_tree
 
 class General:
 
@@ -50,7 +51,7 @@ class General:
     def genera_grafica_de_correlacion(datos : pd.DataFrame):
         plt.figure(figsize=(10,10))
         sns.heatmap(datos.corr(), annot=True, cmap='coolwarm')
-        plt.title('Matriz de Correlación')
+        plt.title(MagicString.MATRIZ_CORRELACION_TITLE)
         plt.show()
 
 
@@ -136,11 +137,13 @@ class General:
 
 
     def regresion_lineal_obtener_intercepto_coeficiente(datos : pd.DataFrame, columna_x, columna_y):
-        X = datos[[columna_x]]
-        Y = datos[columna_y]
+        x_train, x_test, y_train, y_test = General.dividir_registros_train_y_test(datos, columna_y, 0)
+
+        X = x_test[[columna_x]]
+        Y = y_test
 
         regresion_lineal_modelo = LinearRegression()
-        regresion_lineal_modelo.fit(X, Y)
+        regresion_lineal_modelo.fit(x_train[[columna_x]], y_train)
 
         intercepto = regresion_lineal_modelo.intercept_
         coeficiente = regresion_lineal_modelo.coef_
@@ -149,8 +152,8 @@ class General:
         print(MagicString.VEHICULOS_REGRESION_LINEAL_COEFICIENTE.format(coeficiente))
 
         #Visualizar Regresion Lineal.
-        plt.scatter(datos[columna_x], Y, color='blue', label='Datos Reales')
-        plt.plot(datos[columna_x], regresion_lineal_modelo.predict(X), color='red', label='Linea de Regresion')
+        plt.scatter(x_test[columna_x], Y, color='blue', label='Datos Reales')
+        plt.plot(x_test[columna_x], regresion_lineal_modelo.predict(X), color='red', label='Linea de Regresion')
         plt.title('Regresion Lineal: Kilometraje vs Precio')
         plt.xlabel('Km')
         plt.ylabel('Valor (USD)')
@@ -165,7 +168,12 @@ class General:
         for i, item in enumerate(km):
             print(f'Precio predicho para un carro con kilometraje {item[0]} = $ {precio_prediccion[i]}')
 
+    def generar_arbol_de_decision(x_train, y_train, x_test, y_test):
+        tree = DecisionTreeClassifier()
+        tree.fit(x_train, y_train)
+        modelo = tree.predict(x_test)
+        
+        General.evaluar_desempeño_modelo_presicion(modelo, y_test)
 
-    def arbol_de_decision(predictor : pd.DataFrame, target : pd.DataFrame):
-        print('hola')
+        plot_tree(tree)
 
